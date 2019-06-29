@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Clima</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+ 	 <link rel="stylesheet" href="css/fontello.css">
+ 	 <link rel="stylesheet" href="css/style.css">
+	<script
+	 src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" ></script>
+	</head>
+	<body>
+		<header>
+			<div class="contenedor">
+				<h1 class="icon-hail">Clima</h1>
+				<input type="checkbox" id="menu-bar">
+				<label class="icon-th-list" for="menu-bar"></label>
+				<nav class="menu">
+					<a href="">Inicio</a>
+					<a href="">Temperatura</a>
+					<a href="">Departamentos</a>
+				</nav>
+			</div>
+		</header>
+		<main>
+			<section id="banner">
+				<img src="img/banner.jpg">
+				<div class="contenedor">
+					<h2>Pagina de Climoide</h2>
+					<p>Estado de Clima de Guatemala</p>
+					<input id="city"></input>
+		<button id="getWeatherForcast">ESTADO DE CLIMA</button>
+		<div class="ShowWeatherForcast"></div>
+
+		<script type="text/javascript">
+ 		$(document).ready(function(){
+      	$("#getWeatherForcast").click(function(){
+           var city = $("#city").val();
+           var key  = '206ffe7b54b5bbdb1851bf22a21f0ec5';
+
+           $.ajax({
+              url:'http://api.openweathermap.org/data/2.5/weather',
+              dataType:'json',
+              type:'GET',
+              data:{q:city, appid: key, units: 'metric'},
+
+               success: function(data){
+                var wf = '';
+                $.each(data.weather, function(index, val){
+                	 wf += '<p><b>' + data.name + "</b><img src="+ val.icon + ".png></p>"+ data.main.temp + '&deg;C ' + 
+                  ' | ' + val.main + ", " + val.description 
+
+                });
+              
+               $(".ShowWeatherForcast").html(wf);
+              }
+
+            });
+      	});
+    });
+  </script>
+
+				</div>
+			</section>
+		</main>
+	</body>
+</html>
